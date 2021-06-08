@@ -1,0 +1,105 @@
+@use "sass:math";
+
+:root {
+  --col-background-color: #d8d8d8;
+  --col-border-color: #f1f1f1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+$clase: (
+  "luis": "docente",
+  "maribel": "ayudante",
+  "gonzalo": "alumno",
+);
+
+$breakpoints: (
+  "sm": "576px",
+  "md": "768px",
+  "lg": "992px",
+  "xl": "1200px",
+);
+
+$container-sizes: (
+  "sm": "540px",
+  "md": "720px",
+  "lg": "960px",
+  "xl": "1140px",
+);
+
+@mixin make-col($step) {
+  flex: 0 0 #{math.div(100%, 12) * $step};
+  max-width: #{math.div(100%, 12) * $step};
+  width: 100%;
+  padding: 15px;
+  @content;
+}
+
+.container {
+  max-width: 100%;
+  margin: auto;
+
+  &--fluid {
+    max-width: 100% !important;
+  }
+}
+
+[class*="col-"] {
+  background-color: var(--col-background-color);
+  border: 1px solid var(--col-border-color);
+  width: 100%;
+  padding: 15px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  max-width: 80vw;
+  margin: auto;
+}
+
+@for $step from 1 through 12 {
+  .col-#{$step} {
+    @include make-col($step);
+  }
+}
+
+@each $nombre, $ocupacion in $clase {
+  .#{$nombre} {
+    content: #{$ocupacion};
+  }
+}
+
+@each $breakpointName, $breakpointSize in $breakpoints {
+  @media (min-width: $breakpointSize) {
+    .container {
+      max-width: #{map-get($container-sizes, $breakpointName)};
+    }
+
+    @for $step from 1 through 12 {
+      .col {
+        &-#{$breakpointName}-#{$step} {
+          @include make-col($step);
+        }
+      }
+    }
+  }
+}
+
+@for $step from 1 through 12 {
+  .col-#{$step} {
+    @include make-col($step);
+  }
+}
