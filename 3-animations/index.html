@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .container {
+        width: 100vw;
+        height: 50vh;
+        background-color: black;
+        position: relative;
+      }
+
+      .circle {
+        width: 250px;
+        height: 250px;
+        background-color: yellow;
+        border-radius: 50%;
+        position: absolute;
+        top: 70px;
+        left: 0;
+      }
+
+      .animatable {
+        animation: backAndForward 3s ease-in-out forwards;
+      }
+
+      .circle--small {
+        width: 400px;
+        height: 400px;
+        animation: backAndForward 3s -0.3s ease-in-out infinite;
+        background-color: grey;
+      }
+
+      .path {
+        transform: translate(0px, 0px);
+        animation: svgBounce 2s ease-in-out infinite;
+      }
+
+      @keyframes svgBounce {
+        0% {
+          transform: translate(0px, 0px);
+        }
+
+        50% {
+          transform: translate(200px, 200px);
+        }
+        100% {
+          transform: translate(0px, 0px);
+        }
+      }
+
+      @keyframes backAndForward {
+        0% {
+          left: 0px;
+        }
+
+        100% {
+          left: 400px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="circle animatable"></div>
+      <button>click me</button>
+    </div>
+
+    <svg height="250" width="400">
+      <path d="M150 0 L75 200 L225 200 Z" class="path" />
+    </svg>
+  </body>
+</html>
